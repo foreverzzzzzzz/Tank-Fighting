@@ -41,6 +41,8 @@ public class GameDataMgr
     {
         musicData.isOpenBK = isOpen;
         
+        //控制场景音乐开关
+        BKMusic.Instance.ChangeOpen(isOpen);
 
         //存储改变后的数据
         PlayerPrefsDataMgr.Instance.SaveData(musicData, "Music");
@@ -59,6 +61,8 @@ public class GameDataMgr
     {
         musicData.bkValue = value;
         
+        //控制场景音乐大小
+        BKMusic.Instance.ChangeValue(value);
 
         //存储改变后的数据
         PlayerPrefsDataMgr.Instance.SaveData(musicData, "Music");

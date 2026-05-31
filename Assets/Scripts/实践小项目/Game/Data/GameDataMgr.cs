@@ -9,7 +9,9 @@ public class GameDataMgr
 
     //音效数据对象
     public MusicData musicData;
-    
+    //排行榜数据对象
+    public RankList rankData;
+
 
     private GameDataMgr()
     {
@@ -25,7 +27,14 @@ public class GameDataMgr
             musicData.soundValue = 1;
             PlayerPrefsDataMgr.Instance.SaveData(musicData, "Music");
         }
+        
+        //初始化 读取 排行榜数据
+        rankData = PlayerPrefsDataMgr.Instance.LoadData(typeof(RankList), "Rank") as RankList;
+
     }
+    
+    
+    
     
     //开启或者关闭背景音乐
     public void OpenOrCloseBKMusic(bool isOpen)
@@ -63,5 +72,21 @@ public class GameDataMgr
         PlayerPrefsDataMgr.Instance.SaveData(musicData, "Music");
     }
 
+
+    //提供一个 在排行榜中添加数据的方法
+    public void AddRankInfo(string name, int score, float time)
+    {
+        rankData.list.Add(new RankInfo(name, score, time));
+        //排序
+        rankData.list.Sort((a, b) => a.time < b.time ? -1 : 1);
+        //排序过后 移除10条以外的数据
+        //从尾部往前遍历 移除每一条
+        for (int i = rankData.list.Count - 1; i >= 3; i--)
+        {
+            rankData.list.RemoveAt(i);
+        }
+        //存储
+        PlayerPrefsDataMgr.Instance.SaveData(rankData, "Rank");
+    }
 
 }

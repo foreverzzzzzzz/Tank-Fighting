@@ -18,14 +18,15 @@ public class SettingPanel : BasePanel<SettingPanel>
     {
         //2监听对应的事件 处理逻辑
         //处理音乐的变化
-        sliderMusic.changeValue += (value) => {};
+        sliderMusic.changeValue += (value) => GameDataMgr.Instance.ChangeBKValue(value);
         //处理音效的变化
-        sliderSound.changeValue += (value) => {};
+        sliderSound.changeValue += (value) => GameDataMgr.Instance.ChangeSoundValue(value);
 
         //处理音乐开关
-        togMusic.changeValue += (value) => {};
+        togMusic.changeValue += (value) => GameDataMgr.Instance.OpenOrCloseBKMusic(value);
         //处理音效开关
-        togSound.changeValue += (value) => {};
+        togSound.changeValue += (value) => GameDataMgr.Instance.OpenOrCloseSound(value);
+
 
         btnClose.clickEvent += () =>
         {
@@ -37,4 +38,25 @@ public class SettingPanel : BasePanel<SettingPanel>
         
         HideMe();
     }
+    
+    //根据数据 更新面板
+    public void UpdatePanelInfo()
+    {
+        //我们面板上的信息都是根据 音效数据 更新的
+        MusicData data = GameDataMgr.Instance.musicData;
+
+        //设置面板内容
+        sliderMusic.nowValue = data.bkValue;
+        sliderSound.nowValue = data.soundValue;
+        togMusic.isSel = data.isOpenBK;
+        togSound.isSel = data.isOpenSound;
+    }
+
+    public override void ShowMe()
+    {
+        base.ShowMe();
+        //每次显示 面板时 顺便 把面板上的内容也更新了
+        UpdatePanelInfo();
+    }
+
 }

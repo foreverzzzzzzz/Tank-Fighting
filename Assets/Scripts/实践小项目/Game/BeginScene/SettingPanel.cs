@@ -63,4 +63,9 @@ public class SettingPanel : BasePanel<SettingPanel>
         UpdatePanelInfo();
     }
 
+    public override void HideMe()
+    {
+        base.HideMe();
+        Time.timeScale = 1;
+    }
 }

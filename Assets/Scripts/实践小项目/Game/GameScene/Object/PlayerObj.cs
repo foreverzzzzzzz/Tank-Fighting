@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerObj  : TankBaseObj
-
 {
+    public WeaponObj nowWeapon;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +42,9 @@ public class PlayerObj  : TankBaseObj
 
     public override void Fire()
     {
-        
+        if (nowWeapon != null)
+        {
+            nowWeapon.Fire();
+        }
     }
 }

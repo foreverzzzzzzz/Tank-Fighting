@@ -34,7 +34,7 @@ public class GamePanel : BasePanel<GamePanel>
         //监听界面上的一些控件操作事件
         btnSetting.clickEvent += () =>
         {
-            
+            SettingPanel.Instance.ShowMe();
         };
         btnQuit.clickEvent += () =>
         {

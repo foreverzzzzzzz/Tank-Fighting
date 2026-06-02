@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SettingPanel : BasePanel<SettingPanel>
 {
@@ -32,8 +33,11 @@ public class SettingPanel : BasePanel<SettingPanel>
         {
             //隐藏自己
             HideMe();
-            //让开始面板重新显示出来
-            BeginPanel.Instance.ShowMe();
+            if (SceneManager.GetActiveScene().name == "BeginScene")
+            {
+                //让开始面板重新显示出来
+                BeginPanel.Instance.ShowMe();
+            }
         };
         
         HideMe();

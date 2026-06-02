@@ -10,6 +10,9 @@ public abstract class TankBaseObj : MonoBehaviour
     public int maxHp;
     public int hp;
 
+    //所有坦克 都有炮台相关
+    public Transform tankHead;
+    
     //移动旋转速度相关
     public float moveSpeed = 10;
     public float roundSpeed = 100;

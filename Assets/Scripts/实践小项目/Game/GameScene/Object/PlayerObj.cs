@@ -6,6 +6,9 @@ public class PlayerObj  : TankBaseObj
 {
     public WeaponObj nowWeapon;
     
+    //武器父对象位置
+    public Transform weaponPos;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -46,5 +49,33 @@ public class PlayerObj  : TankBaseObj
         {
             nowWeapon.Fire();
         }
+    }
+    
+    public override void Wound(TankBaseObj other)
+    {
+        base.Wound(other);
+        //更新主面板 血条
+        GamePanel.Instance.UpdateHP(this.maxHp, this.hp);
+    }
+    
+    /// <summary>
+    /// 切换武器
+    /// </summary>
+    /// <param name="obj"></param>
+    public void ChangeWeapon(GameObject weapon)
+    {
+        //删除当前拥有的武器
+        if(nowWeapon != null)
+        {
+            Destroy(nowWeapon.gameObject);
+            nowWeapon = null;
+        }
+
+        //切换武器
+        //创建出武器 设置它的父对象 并且保证缩放没什么问题
+        GameObject weaponObj = Instantiate(weapon, weaponPos, false);
+        nowWeapon = weaponObj.GetComponent<WeaponObj>();
+        //设置武器拥有者
+        nowWeapon.SetFather(this);
     }
 }

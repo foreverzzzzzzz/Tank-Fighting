@@ -12,7 +12,7 @@ public class EndPoint : MonoBehaviour
             Time.timeScale = 0;
             //通关逻辑
             //打开胜利界面
-            SceneManager.LoadScene("BeginScene");
+            WinPanel.Instance.ShowMe();
         }
     }
 

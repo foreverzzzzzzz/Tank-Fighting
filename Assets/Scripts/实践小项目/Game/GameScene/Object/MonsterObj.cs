@@ -25,6 +25,18 @@ public class MonsterObj : TankBaseObj
     //子弹预设体
     public GameObject bulletObj;
     
+    //两张 血条的图 外面关联
+    public Texture maxHpBK;
+    public Texture hpBK;
+
+    //显示血条计时用时间
+    private float showTime = 0;
+
+    //之所以没有new 是因为是结构体 可以不用new 直接在下面赋值
+    private Rect maxHpRect;
+    private Rect hpRect;
+    
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -90,5 +102,48 @@ public class MonsterObj : TankBaseObj
         base.Dead();
         //移动怪物死亡时 需要加分
         GamePanel.Instance.AddScore(10);
+    }
+    
+    //在这里进行血条UI的绘制
+    private void OnGUI()
+    {
+        if(showTime > 0)
+        {
+            //不停计时
+            showTime -= Time.deltaTime;
+
+            //画图 画血条
+            //1.把怪物当前位置 转换成 屏幕位置
+            //摄像机里面提供了API 可以将 世界坐标 转为 屏幕坐标
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(this.transform.position);
+            //2.屏幕位置 转换成 GUI位置
+            //知识点：如何得到当前屏幕的分辨率高
+            screenPos.y = Screen.height - screenPos.y;
+
+            //然后再绘制
+            //知识点：GUI中的 图片绘制
+            //底图
+            maxHpRect.x = screenPos.x - 50;
+            maxHpRect.y = screenPos.y - 50;
+            maxHpRect.width = 100;
+            maxHpRect.height = 15;
+            //画底图
+            GUI.DrawTexture(maxHpRect, maxHpBK);
+
+            hpRect.x = screenPos.x - 50;
+            hpRect.y = screenPos.y - 50;
+            //根据血量和最大血量的百分比 决定画多宽
+            hpRect.width = (float)hp / maxHp * 100f;
+            hpRect.height = 15;
+            //画血条
+            GUI.DrawTexture(hpRect, hpBK);
+        }
+    }
+
+    public override void Wound(TankBaseObj other)
+    {
+        base.Wound(other);
+        //设置显示血条的时间
+        showTime = 3;
     }
 }

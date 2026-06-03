@@ -59,8 +59,7 @@ public class PropReward : MonoBehaviour
             //大小和开启状态
             audioS.volume = GameDataMgr.Instance.musicData.soundValue;
             audioS.mute = !GameDataMgr.Instance.musicData.isOpenSound;
-
-
+            
             Destroy(this.gameObject);
         }
     }

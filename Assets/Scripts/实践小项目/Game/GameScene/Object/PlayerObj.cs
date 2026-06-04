@@ -58,6 +58,16 @@ public class PlayerObj  : TankBaseObj
         GamePanel.Instance.UpdateHP(this.maxHp, this.hp);
     }
     
+    public override void Dead()
+    {
+        //这里 不执行 父类的死亡 因为 玩家坦克 摄像机 是它的子对象 如果执行父类死亡
+        //会把玩家坦克从场景上移除 那么久间接的移除了摄像机
+        //base.Dead();
+        //应该处理 失败逻辑 显示失败面板 即可
+        Time.timeScale = 0;
+        LosePanel.Instance.ShowMe();
+    }
+    
     /// <summary>
     /// 切换武器
     /// </summary>

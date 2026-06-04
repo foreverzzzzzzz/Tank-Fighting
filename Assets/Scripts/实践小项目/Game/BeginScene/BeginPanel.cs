@@ -14,7 +14,8 @@ public class BeginPanel : BasePanel<BeginPanel>
     // Start is called before the first frame update
     void Start()
     {
-        
+        //锁定鼠标标针
+        Cursor.lockState = CursorLockMode.Confined;
 
         //监听一次按钮点击过后要做什么
         btnBegin.clickEvent += () =>
